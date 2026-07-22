@@ -12,7 +12,7 @@ import Row from  '../common/layout/row'
 class Dashboard extends Component {
     constructor(props) {
         super(props)
-        this.state = {view: 'cycles'}
+        this.state = {page: 'cycles'}
     }
 
     componentWillMount() {
@@ -20,14 +20,10 @@ class Dashboard extends Component {
         this.props.getSummary()
     }
 
-    sumValues(list = []) {
-        return list
-            .map(item => +item.value || 0)
-            .reduce((total, value) => total + value, 0)
-    }
+    sumValues(list = []) {return list.map(item => +item.value || 0).reduce((total, value) => total + value, 0)}
 
     renderBillingCycles() {
-        const list = this.props.list || []
+        const list = this.props.listar || []
 
         return list.map(cycle => {
             const credit = this.sumValues(cycle.credits)
@@ -50,9 +46,9 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { view } = this.state
+        const { page } = this.state
         const { credit, debt } = this.props.summary 
-        console.log('Dashboard render view: ' + view);
+        console.log('Dashboard render page: ' + page + " --> " + this.state.page );
         return (
             <div> 
                 <ContentHeader title='Dashboard' small='Versão 1.0' />
@@ -61,31 +57,31 @@ class Dashboard extends Component {
                         <h3 style={{ margin: 0, fontWeight: 'bold' }}>MyMoneyApp</h3>
                     </div>
                     <div style={{ marginBottom: '20px', maxWidth: '220px' }}>
-                        <select className='form-control' value={view} onChange={e => this.setState({ view: e.target.value })}>
+                        <select className='form-control' value={page} onChange={e => this.setState({ page: e.target.value })}>
                             <option value='cycles'>Billing Cycles</option>
                             <option value='summary'>Summary</option>
                         </select>
                     </div>
 
-                    {view === 'cycles' ? (
+                    {page === 'cycles' ? (
                         this.renderBillingCycles()
                     ) : 
                     
                     (
                         
-                            <div> 
-                                <ContentHeader title='Dashboard' small='Versão 1.0' />
-                                <Content>
-                                    <Row> 
-                                        <ValueBox cols='12 4' color='green' icon='bank'
-                                            value={`R$ ${credit}`} text='Total de Créditos' />
-                                        <ValueBox cols='12 4' color='red' icon='credit-card'
-                                            value={`R$ ${debt}`} text='Total de Débitos' />
-                                        <ValueBox cols='12 4' color='blue' icon='money'
-                                            value={`R$ ${credit - debt}`} text='Valor Consolidado' />
-                                    </Row> 
-                                </Content> 
-                            </div> 
+                        <div> 
+                            <ContentHeader title='Dashboard' small='Versão 1.0' />
+                            <Content>
+                                <Row> 
+                                    <ValueBox cols='12 4' color='green' icon='bank'
+                                        value={`R$ ${credit}`} text='Total de Créditos' />
+                                    <ValueBox cols='12 4' color='red' icon='credit-card'
+                                        value={`R$ ${debt}`} text='Total de Débitos' />
+                                    <ValueBox cols='12 4' color='blue' icon='money'
+                                        value={`R$ ${credit - debt}`} text='Valor Consolidado' />
+                                </Row> 
+                            </Content> 
+                        </div> 
                        /* <div style={{
                             padding: '20px',
                             background: '#f5f5f5',
@@ -102,6 +98,6 @@ class Dashboard extends Component {
 }
 //const mapStateToProps = state => ({summary: state.dashboard.summary})
 //const mapStateToProps = state => ({list: state.dashboard.list})
-const mapStateToProps = state => ({summary: state.dashboard.summary, list: state.dashboard.list})
+const mapStateToProps = state => ({summary: state.dashboard.summary, listar: state.dashboard.list})
 const mapDispatchToProps = dispatch => bindActionCreators({getList, getSummary}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
