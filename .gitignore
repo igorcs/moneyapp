@@ -3,3 +3,7 @@ node_modules
 /package-lock.json
 /db.billingcycles.findOne()
 /explicacao_nome_no_card.txt
+
+# Frontend build artifacts
+/frontend/public/*
+!/frontend/public/index.html

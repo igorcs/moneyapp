@@ -1,11 +1,9 @@
-const INITIAL_STATE = {summary: {credit: 0, debt: 0}}
+const INITIAL_STATE = {list: []}
 
 export default function(state = INITIAL_STATE, action) {
-    console.log('dashboardReducer action.type: ' + action.type);
     switch (action.type) {
-        
-        case 'BILLING_SUMMARY_FETCHED':
-            return { ...state, summary: action.payload.data }
+        case 'BILLING_CYCLES_DASHBOARD_FETCHED':
+            return { ...state, list: action.payload.data }
         default:
             return state
     }
