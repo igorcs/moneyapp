@@ -1,0 +1,5 @@
+node_modules
+*.log
+/package-lock.json
+/db.billingcycles.findOne()
+/explicacao_nome_no_card.txt
